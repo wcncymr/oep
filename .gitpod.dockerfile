@@ -16,8 +16,12 @@ RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - &
 
 USER gitpod
 
-RUN curl -L https://services.gradle.org/distributions/gradle-6.5.1-bin.zip -o gradle-6.5.1-bin.zip
-RUN unzip gradle-6.5.1-bin.zip
+RUN cd /home/gitpod && \
+    wget -qO gradle-6.5.1-bin.zip \
+    https://services.gradle.org/distributions/gradle-6.5.1-bin.zip && \
+    unzip gradle-6.5.1-bin.zip && \
+    rm -f gradle-6.5.1-bin.zip
+    
 ENV GRADLE_HOME=/gradle/gradle-6.5.1
 ENV PATH=$PATH:$GRADLE_HOME/bin
 RUN gradle --version
@@ -28,15 +32,15 @@ RUN cd /home/gitpod && \
     tar -xvf flutter_sdk.tar.xz && \
     rm -f flutter_sdk.tar.xz
 
-RUN cd /home/gitpod && \
+RUN cd /usr/lib && \
     wget -qO android_studio.zip \
     https://dl.google.com/dl/android/studio/ide-zips/3.3.0.20/android-studio-ide-182.5199772-linux.zip && \
     unzip android_studio.zip && \
     rm -f android_studio.zip
 
 # TODO(tianhaoz95): make the name of the SDK file into an environment variable to avoid maintainance issue
-RUN mkdir -p /home/gitpod/android-sdk && \
-    cd /home/gitpod/android-sdk && \
+RUN mkdir -p /usr/lib/android-sdk && \
+    cd /usr/lib/android-sdk && \
     wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
     unzip sdk-tools-linux-4333796.zip && \
     rm -f sdk-tools-linux-4333796.zip
