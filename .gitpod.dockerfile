@@ -32,6 +32,8 @@ RUN cd /home/gitpod && \
     tar -xvf flutter_sdk.tar.xz && \
     rm -f flutter_sdk.tar.xz
 
+USER root
+
 RUN cd /usr/lib && \
     wget -qO android_studio.zip \
     https://dl.google.com/dl/android/studio/ide-zips/3.3.0.20/android-studio-ide-182.5199772-linux.zip && \
