@@ -16,6 +16,12 @@ RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - &
 
 USER gitpod
 
+RUN curl -L https://services.gradle.org/distributions/gradle-6.5.1-bin.zip -o gradle-6.5.1-bin.zip
+RUN unzip gradle-6.5.1-bin.zip
+ENV GRADLE_HOME=/gradle/gradle-6.5.1
+ENV PATH=$PATH:$GRADLE_HOME/bin
+RUN gradle --version
+
 RUN cd /home/gitpod && \
     wget -qO flutter_sdk.tar.xz \
     https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.9.1+hotfix.4-stable.tar.xz &&\
