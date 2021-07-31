@@ -3,9 +3,10 @@ FROM gitpod/workspace-full:latest
 ENV ANDROID_HOME=/home/gitpod/android-sdk \
     FLUTTER_HOME=/home/gitpod/flutter
 
-USER root
+USER gitpod
 
-RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+RUN  cd /home/gitpod && \
+    curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list && \
     apt-get update && \
     apt-get -y install build-essential dart libkrb5-dev gcc make gradle android-tools-adb android-tools-fastboot openjdk-8-jdk && \
@@ -14,7 +15,6 @@ RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - &
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*;
 
-USER gitpod
 
 RUN cd /home/gitpod && \
     wget -qO gradle-6.5.1-bin.zip \
